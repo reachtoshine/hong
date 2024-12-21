@@ -1,0 +1,113 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://www.example.com/ocean-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+}
+header {
+    background-color: rgba(0, 128, 128, 0.8);
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 2rem auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    color: #000;
+    border-radius: 10px;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.form-group button {
+    background-color: rgba(0, 128, 128, 0.8);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.form-group button:hover {
+    background-color: rgba(0, 102, 102, 0.8);
+}
+.hidden {
+    display: none;
+}
+.post {
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+    position: relative;
+}
+.post:last-child {
+    border-bottom: none;
+}
+.post h3 {
+    margin: 0 0 0.5rem;
+}
+.post p {
+    margin: 0;
+}
+.download-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background-color: rgba(0, 128, 128, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.download-button:hover {
+    background-color: rgba(0, 102, 102, 0.8);
+}
+
+.btn-3d {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    padding: 10px 13px;
+    color: white;
+    margin: 10px 5px 15px;
+    border-radius: 3px;
+    text-align: center;
+    transition: top .01s linear;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+.btn-3d.blue:hover   {background-color: #699DD1;}
+
+.btn-3d.blue {
+    background-color: #6DA2D9;
+    box-shadow: 0 0 0 1px #6698cb inset,
+          0 0 0 2px rgba(255,255,255,0.15) inset,
+          0 8px 0 0 rgba(110, 164, 219, .7),
+          0 8px 0 1px rgba(0,0,0,.4),
+          0 8px 8px 1px rgba(0,0,0,0.5);
+  }
+  .btn-3d.blue:active {
+    box-shadow: 0 0 0 1px #6191C2 inset,
+          0 0 0 2px rgba(255,255,255,0.15) inset,
+          0 0 0 1px rgba(0,0,0,0.4);
+  }
+  
