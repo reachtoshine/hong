@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홍's 게시판</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" href="/assets/icon.png"/>
+    <link rel="apple-touch-icon" href="/assets/icon.png"/> 
+</head>
+<body>
+    <%- include('nav.ejs') %>
+    <div class="detail-bg"> 
+        <h4><%= result.title %></h4> 
+        <p><%= result.content %></p> 
+    </div> 
+</body>
+</html>

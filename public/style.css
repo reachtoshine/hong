@@ -9,9 +9,19 @@ body {
 header {
     background-color: rgba(0, 128, 128, 0.8);
     color: white;
-    text-align: center;
-    padding: 1rem 0;
+    text-align: left;
+    padding: 3vw;
 }
+
+header a {
+  padding-inline: 3vw;
+  font-size: 20px;
+  width: 33vw;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .container {
     width: 90%;
     max-width: 800px;
@@ -109,4 +119,92 @@ header {
           0 0 0 2px rgba(255,255,255,0.15) inset,
           0 0 0 1px rgba(0,0,0,0.4);
   }
+  
+  .nameInput {
+        display: inline;
+        width: 50vw;
+        height: 8vh;
+        font-size: 15px;
+        border: 0;
+        border-radius: 15px;
+        outline: none;
+        padding-left: 10px;
+        background-color: rgb(233, 233, 233);
+  }
+
+  .nameButton {
+    display: inline;
+    width: 20vw;
+    height: 8vh;
+    font-size: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    background-color: rgb(233, 233, 233);
+  }
+
+  .nameContainer {
+    position: absolute;
+    display: inline;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: max-content;
+    padding: 30px;
+  }
+
+  .grey-bg {
+    background: #eee;
+  }
+  .white-bg {
+    background: white;
+    margin: 20px;
+    border-radius: 15px;
+  }
+  .list-box {
+    padding : 10px;
+    border-bottom: 1px solid#eee;
+  }
+  .list-box h4{
+    font-size: 16px;
+    margin: 5px;
+    color: black;
+  }
+  .list-box p {
+    font-size: 13px;
+    margin: 5px;
+    color: black;
+  }
+
+  input,div {
+    box-sizing: border-box;
+  }
+  .form-box {
+    background : white;
+    padding : 25px;
+    margin: 20px;
+    border-radius: 8px;
+  }
+  .form-box input {
+    padding : 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  .form-box button {
+    padding: 10px;
+    border : none;
+    background : lightgrey;
+    border-radius: 5px;
+  }
+
+  .detail-bg {
+    background: white;
+    padding: 15px;
+    margin-top: 10px;
+    color: black;
+  }
+
   

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홍's 게시판</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="/assets/icon.png"/>
+    <link rel="apple-touch-icon" href="/assets/icon.png"/> 
+</head>
+<body>
+    <%- include('nav.ejs') %>
+    <body class="grey-bg">
+
+        <% for (var i = 0; i < 글목록.length; i++){ %>
+          
+            <div class="white-bg">
+              <a href="/detail/<%= 글목록[i]._id %>">
+                <div class="list-box">
+                  <h4><%= 글목록[i].title %></h4>
+                  <p><%= 글목록[i].content %></p>
+                </div>
+              </a>
+            </div>
+          
+          <% } %> 
+      
+      </body>
+</body>
+</html>
