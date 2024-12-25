@@ -10,11 +10,31 @@
 </head>
 <body>
     <%- include('nav.ejs') %>
-    <form class="form-box" action="/add" method="POST">
-        <h4>글쓰기</h4>
-        <input name="title" placeholder="제목을 입력해 주세요.">
-        <input name="content" placeholder="내용을 입력해 주세요.">
-        <button type="submit">전송</button>
-    </form> 
+
+    <form action="/add" method="POST">
+        <div id="uploadForm">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" id="title" placeholder="제목을 입력하세요" name="title">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea id="autoResizeTextarea" rows={1} placeholder="내용을 입력하세요" name="content" oninput="autoResize(this)"></textarea>
+            </div>
+            <!-- <div class="form-group">
+                <label for="media">사진/동영상 업로드</label>
+                <input type="file" id="media" accept="image/*,video/*" multiple>
+            </div> -->
+            <div class="form-group">
+                <button type="submit">글 올리기</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        function autoResize(textarea) {
+          textarea.style.height = 'auto' // 높이를 자동으로 초기화
+          textarea.style.height = textarea.scrollHeight + 'px' // 스크롤 높이에 맞게 높이 설정
+        }
+      </script>
 </body>
 </html>
