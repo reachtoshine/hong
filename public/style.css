@@ -154,13 +154,11 @@ header a {
     padding: 30px;
   }
 
-  .grey-bg {
-    background: #eee;
-  }
   .white-bg {
     background: white;
     margin: 20px;
     border-radius: 15px;
+    transition-duration: 0.5s;
   }
   .list-box {
     padding : 10px;

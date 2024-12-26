@@ -37,7 +37,6 @@ app.get('/home', (요청, 응답) => {
 
 app.get('/list', async (요청, 응답) => {
     let result = await db.collection('posts').find().toArray()
-    console.log(result.length)
     응답.render('list.ejs', { 글목록 : result })
 
   })
@@ -58,13 +57,11 @@ app.get('/list', async (요청, 응답) => {
   })
 
   app.get('/detail/:id', async (요청, 응답)=>{
-    console.log(요청.params.id)
     let result = await db.collection('posts').findOne({_id : new ObjectId(요청.params.id)})
     응답.render('detail.ejs', {result : result})
 })
 
 app.get('/edit/:id', async (요청, 응답) => {
-  console.log(요청.params.id)
   let result = await db.collection('posts').findOne({_id : new ObjectId(요청.params.id)})
   응답.render('edit.ejs', {result : result})
 })
