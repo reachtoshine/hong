@@ -10,7 +10,7 @@
 </head>
 <body>
     <%- include('nav.ejs') %>
-    <body class="grey-bg">
+    <div class="grey-bg">
 
         <% for (var i = 0; i < 글목록.length; i++){ %>
           
@@ -21,11 +21,19 @@
                   </a>
                   <p><%= 글목록[i].content %></p>
                   <a href="/edit/<%= 글목록[i]._id %>">✏️</a>
+                  <span class="delete" data-id="<%= 글목록[i]._id %>">🗑️</span>
                 </div>
             </div>
           
           <% } %> 
       
-      </body>
+    </div>
+    <script>
+      document.querySelectorAll('.delete')[0].addEventListener('click', function(e){
+        fetch('/delete?docid=' + e.target.dataset.id , {
+          method : "DELETE"
+        })
+      })
+    </script>
 </body>
 </html>
