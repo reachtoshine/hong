@@ -1,4 +1,5 @@
 const express = require('express')
+const methodOverride = require('method-override')
 const app = express()
 const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb') 
@@ -7,6 +8,7 @@ app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(express.urlencoded({extended:true})) 
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method')) 
 
 let db
 const url = 'mongodb+srv://reachtoshine:Ov79bA0M9DU8YQq8@cluster0.lvgghli.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
@@ -61,3 +63,15 @@ app.get('/list', async (요청, 응답) => {
     응답.render('detail.ejs', {result : result})
 })
 
+app.get('/edit/:id', async (요청, 응답) => {
+  console.log(요청.params.id)
+  let result = await db.collection('posts').findOne({_id : new ObjectId(요청.params.id)})
+  응답.render('edit.ejs', {result : result})
+})
+
+app.put('/edit', async (요청, 응답)=>{
+  await db.collection('posts').updateOne({ _id : new ObjectId(요청.body.id) },
+    {$set : { title : 요청.body.title, content : 요청.body.content }
+  })
+  응답.redirect('/list')
+}) 
