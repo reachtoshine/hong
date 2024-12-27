@@ -126,3 +126,7 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
   });
 });
+
+app.get('/login', async (요청, 응답)=>{
+  응답.render('auth.ejs')
+})

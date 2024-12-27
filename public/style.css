@@ -209,3 +209,13 @@ textarea {
   overflow: hidden;
   resize: none;
 }
+
+.naverLogin {
+  display: flex;
+  justify-content: center;
+  padding-top: 5vh;
+}
+
+.naverLogin img {
+  width: 70vw;
+}
