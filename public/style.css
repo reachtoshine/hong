@@ -10,7 +10,7 @@ header {
     background-color: rgba(0, 128, 128, 0.8);
     color: white;
     text-align: left;
-    padding: 3vw;
+    padding: 1.5vw;
 }
 
 header a {
@@ -218,4 +218,8 @@ textarea {
 
 .naverLogin img {
   width: 70vw;
+}
+.naverLogin p {
+  outline: #000;
+  border-radius: 3px;
 }
