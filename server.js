@@ -18,7 +18,7 @@ app.use(session({secret: 'G5gXGAkMZb', resave: false, saveUninitialized: true}))
 passport.use(new NaverStrategy({
   clientID: 'yqpW_K1jOFEsdiOFzuab',
   clientSecret: 'G5gXGAkMZb',
-  callbackURL: '/aurh/naver',
+  callbackURL: '/auth/naver',
 }, (accessToken, refreshToken, profile, done) => {
   return done(null, profile);
 }));
