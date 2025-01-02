@@ -5,35 +5,24 @@ const { MongoClient } = require('mongodb')
 const { ObjectId } = require('mongodb') 
 const session = require('express-session');
 const passport = require('passport');
-const NaverStrategy = require('passport-naver').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt') 
+const { name } = require('ejs')
 
 app.set('view engine', 'ejs') 
 app.use(express.json())
 app.use(express.urlencoded({extended:true})) 
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method')) 
-app.use(session({secret: 'G5gXGAkMZb', resave: false, saveUninitialized: true}));
-
-
-passport.use(new NaverStrategy({
-  clientID: 'yqpW_K1jOFEsdiOFzuab',
-  clientSecret: 'G5gXGAkMZb',
-  callbackURL: '/auth/naver',
-}, (accessToken, refreshToken, profile, done) => {
-  return done(null, profile);
-}));
-
 app.use(passport.initialize())
 app.use(session({
-  secret: 'dasdlkfjσδκξφηαΑΓφδκ!@#υ×℃−×№»⌉»‱✓ℳ₿௹؋⃀',
+  secret: 'dasdlk',
   resave : false,
   saveUninitialized : false,
   cookie : { maxAge : 6 * 60 * 60 * 1000 }
 }))
-
-app.use(passport.session()) 
+app.use(passport.session())
+app.use(passport.authenticate('session'))
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -55,81 +44,39 @@ app.listen(8080, () => {
   console.log('http://localhost:8080 에서 서버 실행중')
 })
 
-// app.post('/login', async (요청, 응답, next) => {
-//   passport.use(new LocalStrategy(async (입력한아이디, 입력한비번, cb) => {
-//     let result = await db.collection('users').findOne({ username : 입력한아이디})
-//     if (!result) {
-//       return cb(null, false, { message: '아이디 DB에 없음' })
-//     }
-  
-//     if (await bcrypt.compare(입력한비번, result.password)) {
-//       return cb(null, result)
-//     } else {
-//       return cb(null, false, { message: '비번불일치' });
-//     }
-//   })) 
-//   passport.serializeUser((user, done) => {
-//     process.nextTick(() => {
-//       done(null, { id: user._id, username: user.username })
-//     })
-//   })
-//   passport.deserializeUser((user, done) => {
-//     process.nextTick(() => {
-//       return done(null, user)
-//     })
-//   })
-// }) 
-
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const result = await db.collection('users').findOne({ username });
-      if (!result) {
-        return done(null, false, { message: '아이디 DB에 없음' });
-      }
-      const isMatch = await bcrypt.compare(password, result.password);
-      if (!isMatch) {
-        return done(null, false, { message: '비번불일치' });
-      }
-      return done(null, result); // 인증 성공
-    } catch (err) {
-      return done(err); // 오류 처리
-    }
-  })
-);
-
-// 직렬화 (세션에 저장)
-passport.serializeUser((user, done) => {
-  done(null, user._id); // 세션에 저장할 사용자 ID
-});
-
-// 역직렬화 (세션에서 사용자 정보 복원)
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await db.collection('users').findOne({ _id: id });
-    done(null, user);
-  } catch (err) {
-    done(err);
+passport.use(new LocalStrategy(async (입력한아이디, 입력한비번, cb) => {
+  let result = await db.collection('users').findOne({ username : 입력한아이디})
+  if (!result) {
+    return cb(null, false, { message: 'ID 또는 비밀번호가 일치하지 않습니다.' })
   }
-});
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(
-  session({
-    secret: 'your_secret_key',
-    resave: false,
-    saveUninitialized: false,
+  if (await bcrypt.compare(입력한비번, result.password)) {
+    return cb(null, result)
+  } else {
+    return cb(null, false, { message: 'ID 또는 비밀번호가 일치하지 않습니다.' });
+  }
+})) 
+passport.serializeUser((user, done) => {
+  process.nextTick(() => {
+    done(null, { id: user._id, username: user.username, name : user.name})
   })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+})
+passport.deserializeUser((user, done) => {
+    return done(null, user)
+})
 
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/', // 인증 성공 시 리다이렉트
-  failureRedirect: '/idlogin',    // 인증 실패 시 리다이렉트
-  failureFlash: true,           // 실패 메시지 전달
-}));
+app.post('/login', async (요청, 응답, next) => {
+
+  passport.authenticate('local', (error, user, info) => {
+      if (error) return 응답.status(500).json(error)
+      if (!user) return 응답.status(401).json(info.message)
+      요청.logIn(user, (err) => {
+        if (err) return next(err)
+        응답.redirect('/')
+      })
+  })(요청, 응답, next)
+
+}) 
 
 app.get('/', (요청, 응답) => {
   if (요청.user){
@@ -154,11 +101,10 @@ app.get('/list', async (요청, 응답) => {
   })
 
   app.get('/write', async (요청, 응답) => {
-    if (요청.user){
-      let result = await db.collection('posts').find().toArray()
-      응답.render('write.ejs')
-    } else {
+    if (!요청.user){
       응답.redirect('/login')
+    } else {
+      응답.render('write.ejs')
     }
   })
 
@@ -167,7 +113,7 @@ app.get('/list', async (요청, 응답) => {
       if (요청.body.title == '') {
         응답.send('제목안적었는데')
       } else {
-        await db.collection('posts').insertOne({ title : 요청.body.title, content : 요청.body.content })
+        await db.collection('posts').insertOne({ title : 요청.body.title, content : 요청.body.content, name : 요청.user.name })
         응답.redirect('/list') 
       }
     } else {
@@ -214,42 +160,8 @@ app.delete('/delete', async (요청, 응답) => {
   }
 })
 
-
-
-// 로그인 라우터
-app.get('/auth/naver', passport.authenticate('naver'));
-
-// 콜백 라우터
-app.get('/auth/naver/callback',
-  passport.authenticate('naver', { failureRedirect: '/list' }),
-  (req, res) => {
-    // 성공적으로 로그인한 후
-    res.redirect('/profile');
-  }
-);
-
-// 프로필 페이지
-app.get('/profile', (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-  res.json(req.user);
-});
-
-// 로그아웃
-app.get('/logout', (req, res) => {
-  req.logout(err => {
-    if (err) return next(err);
-    res.redirect('/');
-  });
-});
-
 app.get('/login', async (요청, 응답)=>{
-  응답.render('auth.ejs')
-})
-
-app.get('/auth/id', async(요청, 응답) => {
-  응답.render('select.ejs')
+  응답.redirect("/idlogin")
 })
 
 app.get('/signup', async(요청, 응답) => {
@@ -257,11 +169,16 @@ app.get('/signup', async(요청, 응답) => {
 })
 
 app.post('/signup', async(요청, 응답) => {
-  await db.collection('users').insertOne({
-    username : 요청.body.username,
-    password : await bcrypt.hash(요청.body.password, 10)
-  })
-  응답.redirect('/')
+  if (요청.body.password == 요청.body.repw) {
+    await db.collection('users').insertOne({
+      username : 요청.body.username,
+      password : await bcrypt.hash(요청.body.password, 10),
+      name : 요청.body.name
+    })
+    응답.redirect('/')
+  } else {
+    응답.send("입력한 비밀번호와 확인비밀번호가 일치하지 않습니다. 다시 시도하려면 브라우저에서 뒤로가기 버튼을 눌러주세요.")
+  }
 })
 
 app.get('/idlogin', async(요청, 응답) => {

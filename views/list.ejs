@@ -16,6 +16,7 @@
                 <div class="list-box">
                   <a href="/detail/<%= 글목록[i]._id %>">
                     <h4><%= 글목록[i].title %></h4>
+                    작성자: <%= 글목록[i].name %>
                   </a>
                   <p><%= 글목록[i].content %></p>
                   <a href="/edit/<%= 글목록[i]._id %>">✏️</a>
@@ -39,6 +40,7 @@
           })
         }) 
       }
+      
     </script>
 </body>
 </html>
