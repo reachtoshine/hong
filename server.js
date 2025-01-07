@@ -185,3 +185,6 @@ app.get('/idlogin', async(요청, 응답) => {
   응답.render('idlogin.ejs')
 })
 
+app.get('/donate', async(요청, 응답) => {
+  응답.render('donate.ejs')
+})
