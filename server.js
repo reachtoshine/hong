@@ -23,14 +23,6 @@ app.use(session({
 }))
 app.use(passport.session())
 app.use(passport.authenticate('session'))
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
-});
-
 let db
 const url = 'mongodb+srv://reachtoshine:Ov79bA0M9DU8YQq8@cluster0.lvgghli.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 new MongoClient(url).connect().then((client)=>{
@@ -94,7 +86,7 @@ app.get('/home', (요청, 응답) => {
 app.get('/list', async (요청, 응답) => {
     if (요청.user){
       let result = await db.collection('posts').find().toArray()
-      응답.render('list.ejs', { 글목록 : result })
+      응답.render('list.ejs', { 글목록 : result, 요청 : 요청 })
     } else {
       응답.redirect('/login')
     }
@@ -113,7 +105,11 @@ app.get('/list', async (요청, 응답) => {
       if (요청.body.title == '') {
         응답.send('제목안적었는데')
       } else {
-        await db.collection('posts').insertOne({ title : 요청.body.title, content : 요청.body.content, name : 요청.user.name })
+        await db.collection('posts').insertOne({ 
+          title : 요청.body.title, 
+          content : 요청.body.content,
+          name : 요청.user.name,
+          userid : 요청.user._id })
         응답.redirect('/list') 
       }
     } else {
@@ -151,14 +147,17 @@ app.put('/edit', async (요청, 응답)=>{
   }
 }) 
 
-app.delete('/delete', async (요청, 응답) => {
-  if (요청.user){
-    await db.collection('posts').deleteOne( { _id : new ObjectId(요청.query.docid) } )
+app.delete('/delete', async (요청, 응답)=>{
+  try{
+    await db.collection('posts').deleteOne({ 
+      _id : new ObjectId(요청.query.docid),
+      // userid : 요청.user._id
+    })
     응답.send('삭제완료')
-  } else {
-    응답.redirect('/login')
+  } catch(e) {
+    console.error(e)
   }
-})
+}) 
 
 app.get('/login', async (요청, 응답)=>{
   응답.redirect("/idlogin")
@@ -183,8 +182,4 @@ app.post('/signup', async(요청, 응답) => {
 
 app.get('/idlogin', async(요청, 응답) => {
   응답.render('idlogin.ejs')
-})
-
-app.get('/donate', async(요청, 응답) => {
-  응답.render('donate.ejs')
 })
