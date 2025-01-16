@@ -105,11 +105,12 @@ app.get('/list', async (요청, 응답) => {
       if (요청.body.title == '') {
         응답.send('제목안적었는데')
       } else {
+        console.log(요청.user)
         await db.collection('posts').insertOne({ 
           title : 요청.body.title, 
           content : 요청.body.content,
           name : 요청.user.name,
-          userid : 요청.user._id })
+          userid : 요청.user.id })
         응답.redirect('/list') 
       }
     } else {

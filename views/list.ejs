@@ -18,11 +18,11 @@
                     <h4><%= 글목록[i].title %></h4>
                     작성자: <%= 글목록[i].name %>
                   </a>
-                  <p><%= 글목록[i].content %></p>
+                  <pre><%= 글목록[i].content %></pre>
                   <a href="/edit/<%= 글목록[i]._id %>">✏️</a>
-
+                  <% if (글목록[i].userid == 요청.user.id) { %>
                     <span class="delete" data-id="<%= 글목록[i]._id %>">🗑️</span>
-
+                  <% } %>
                 </div>
             </div>
           

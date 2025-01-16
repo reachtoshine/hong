@@ -169,7 +169,7 @@ header a {
     margin: 5px;
     color: black;
   }
-  .list-box p {
+  .list-box pre {
     font-size: 13px;
     margin: 5px;
     color: black;
@@ -205,6 +205,11 @@ header a {
     margin-top: 10px;
     color: black;
   }
+
+.detail-bg pre {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 textarea {
   overflow: hidden;
   resize: none;
