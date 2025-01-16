@@ -8,7 +8,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt') 
 const { name } = require('ejs')
-                 require('dotenv').config() 
+require('dotenv').config()
 
 app.set('view engine', 'ejs') 
 app.use(express.json())
@@ -20,7 +20,7 @@ app.use(session({
   secret: process.env.Session_Secret,
   resave : false,
   saveUninitialized : false,
-  cookie : { maxAge : process.env.CookieAge }
+  cookie : { maxAge : process.env.C }
 }))
 app.use(passport.session())
 app.use(passport.authenticate('session'))
