@@ -20,7 +20,7 @@ app.use(session({
   secret: process.env.Session_Secret,
   resave : false,
   saveUninitialized : false,
-  cookie : { maxAge : process.env.C }
+  cookie : { maxAge : Number(process.env.Cookie)}
 }))
 app.use(passport.session())
 app.use(passport.authenticate('session'))
