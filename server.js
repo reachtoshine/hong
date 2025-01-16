@@ -8,6 +8,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt') 
 const { name } = require('ejs')
+import dotenv from "dotenv";
 
 app.set('view engine', 'ejs') 
 app.use(express.json())
@@ -16,15 +17,15 @@ app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method')) 
 app.use(passport.initialize())
 app.use(session({
-  secret: 'dasdlk',
+  secret: process.env.Session_Secret,
   resave : false,
   saveUninitialized : false,
-  cookie : { maxAge : 6 * 60 * 60 * 1000 }
+  cookie : { maxAge : process.env.CookieAge }
 }))
 app.use(passport.session())
 app.use(passport.authenticate('session'))
 let db
-const url = 'mongodb+srv://reachtoshine:Ov79bA0M9DU8YQq8@cluster0.lvgghli.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const url = process.env.DB_URL
 new MongoClient(url).connect().then((client)=>{
   console.log('DB연결성공')
   db = client.db('hong')
