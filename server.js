@@ -8,7 +8,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt') 
 const { name } = require('ejs')
-import dotenv from "dotenv";
+                 require('dotenv').config() 
 
 app.set('view engine', 'ejs') 
 app.use(express.json())

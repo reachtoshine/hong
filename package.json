@@ -17,7 +17,6 @@
     "url": "https://github.com/reachtoshine/hong/issues"
   },
   "homepage": "https://github.com/reachtoshine/hong#readme",
-  "description": "",
   "dependencies": {
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
@@ -31,5 +30,7 @@
     "passport-local": "^1.0.0",
     "passport-naver": "^1.0.6",
     "pexels": "^1.4.0"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
